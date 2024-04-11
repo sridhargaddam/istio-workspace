@@ -246,9 +246,9 @@ In this exercise, we shall configure Istio to distribute the requests for `hello
 
 |Region|Zone  |%traffic|
 |--|--|--|
-| east | zone1  | 50% |
-| east | zone2  | 25% |
-| east | zone1  | 25% |
+| east | zone1  | 10% |
+| east | zone2  | 10% |
+| east | zone1  | 80% |
 
 #### Configure Weighted distribution
 
@@ -285,4 +285,4 @@ EOF
 SLEEP_POD_NAME=$(keast get pods -l app=sleep -n sleep -o jsonpath='{.items[0].metadata.name}')
 while true; do keast exec $SLEEP_POD_NAME -n sleep -c sleep -- curl -sSL helloworld.sample.svc.cluster.local:5000/hello && sleep 1 ; done;
 ```
-Verify why **Locality weighted distribution** is not working as expected across the mesh.
+TODO:: Verify why **Locality weighted distribution** is not working as expected across the mesh.
