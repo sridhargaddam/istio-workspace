@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: WorkloadEntry
+metadata:
+  name: remote-helloworld
+spec:
+  address: {{ $.Values.eastwestGatewayIP }}
+  ports:
+    http: 15443
+  network: west-network
+  locality: west
+  labels:
+    app: helloworld
+    security.istio.io/tlsMode: istio
