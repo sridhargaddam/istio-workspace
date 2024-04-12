@@ -7,9 +7,7 @@ spec:
   ports:
     http: 15443
   network: west-network
-  locality: west
+  locality: {{ $.Values.localityInfo }}
   labels:
     app: helloworld
-    topology.kubernetes.io/region: {{ $.Values.region }}
-    topology.kubernetes.io/zone: {{ $.Values.zone }}
     security.istio.io/tlsMode: istio
