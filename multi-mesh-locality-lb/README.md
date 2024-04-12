@@ -269,7 +269,7 @@ spec:
           to:
             "east/zone1/*": 10
             "east/zone2/*": 10
-            "west/zone3/*": 80
+            "us/west/zone3/*": 80
     outlierDetection:
       consecutive5xxErrors: 100
       interval: 1s
