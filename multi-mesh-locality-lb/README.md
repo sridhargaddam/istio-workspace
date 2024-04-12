@@ -283,4 +283,17 @@ EOF
 SLEEP_POD_NAME=$(keast get pods -l app=sleep -n sleep -o jsonpath='{.items[0].metadata.name}')
 while true; do keast exec $SLEEP_POD_NAME -n sleep -c sleep -- curl -sSL helloworld.sample.svc.cluster.local:5000/hello && sleep 1 ; done;
 ```
-TODO:: Verify why **Locality weighted distribution** is not working as expected across the mesh.
+
+Sample output would be as follows.
+
+```shell
+Hello version: zone3, instance: helloworld-zone3-666965666b-k2p9m
+Hello version: zone3, instance: helloworld-zone3-666965666b-k2p9m
+Hello version: zone3, instance: helloworld-zone3-666965666b-k2p9m
+Hello version: zone3, instance: helloworld-zone3-666965666b-k2p9m
+Hello version: zone3, instance: helloworld-zone3-666965666b-k2p9m
+Hello version: zone1, instance: helloworld-zone1-784c57876d-2cwdr
+Hello version: zone2, instance: helloworld-zone2-8584c5d7bf-xhdfw
+Hello version: zone3, instance: helloworld-zone3-666965666b-k2p9m
+Hello version: zone3, instance: helloworld-zone3-666965666b-k2p9m
+```
