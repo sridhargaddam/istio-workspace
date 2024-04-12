@@ -151,7 +151,7 @@ kwest apply -f helloworld-zone3.yaml -n sample
 ```shell
 EAST_WEST_GW_IP=$(kwest get svc -l istio=eastwestgateway -n istio-system -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
 helm template -s templates/helloworld-workload.yaml . \
-  --set eastwestGatewayIP=$EAST_WEST_GW_IP | keast apply -n sample -f -
+  --set eastwestGatewayIP=$EAST_WEST_GW_IP --set zone=zone3 --set region=west | keast apply -n sample -f -
 ```
 
 2. Check endpoints for helloworld in sleep's istio-proxy:
@@ -271,7 +271,7 @@ spec:
           to:
             "east/zone1/*": 10
             "east/zone2/*": 10
-            "west/zone3/*": 80
+            "west/*": 80
     outlierDetection:
       consecutive5xxErrors: 100
       interval: 1s

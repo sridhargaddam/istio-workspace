@@ -10,4 +10,6 @@ spec:
   locality: west
   labels:
     app: helloworld
+    topology.kubernetes.io/region: {{ $.Values.region }}
+    topology.kubernetes.io/zone: {{ $.Values.zone }}
     security.istio.io/tlsMode: istio
