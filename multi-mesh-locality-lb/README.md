@@ -34,8 +34,6 @@ east network could be `172.18.64.0/18` and west could be `172.18.128.0/18`, whic
 CIDRs must have escaped slash before the network mask to make it usable with `sed`, e.g. `172.18.64.0\/18`.
 ```shell
 export EAST_CLUSTER_CIDR="172.18.64.0\/18"
-```
-```shell
 export WEST_CLUSTER_CIDR="172.18.128.0\/18"
 ```
 ```shell
@@ -248,7 +246,7 @@ In this exercise, we shall configure Istio to distribute the requests for `hello
 |--|--|--|
 | east | zone1  | 10% |
 | east | zone2  | 10% |
-| east | zone1  | 80% |
+| west | zone3  | 80% |
 
 #### Configure Weighted distribution
 
