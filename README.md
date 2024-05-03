@@ -1,6 +1,6 @@
 # istio-workspace
 
-> 📝 This is a continuation of the [work from Jacek Ewertowski](https://github.com/jewertow/istio-playground/blob/master/mesh-federation/README.md) and includes steps to verify [Locality Load Balancing](./multi-mesh-locality-lb) and [importing a service with multiple ports](./multi-port-service) in a multi-mesh deployment.
+> 📝 This is a continuation of the [work from Jacek Ewertowski](https://github.com/jewertow/istio-playground/blob/master/mesh-federation/README.md) and includes steps to verify [Locality Load Balancing](./locality-load-balancing) and [importing a service with multiple ports](./multi-port-service) in a multi-mesh deployment.
 
 ### Setup KIND clusters with locality info configured on the nodes.
 
