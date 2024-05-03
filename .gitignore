@@ -1,9 +1,9 @@
 **/*.kubeconfig
 .idea
-multi-mesh-locality-lb/Makefile.selfsigned.mk
-multi-mesh-locality-lb/common.mk
+Makefile.selfsigned.mk
+common.mk
 
-multi-mesh-locality-lb/east/
-multi-mesh-locality-lb/west/
-multi-mesh-locality-lb/helloworld-zone*
+helloworld-zone*
 
+east/
+west/

@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: import-echo-server
+  namespace: istio-system
+spec:
+  hosts:
+  - echo-server.echo-ns.svc.cluster.local
+  ports:
+  - number: 80
+    name: http-port
+    protocol: HTTP
+  - number: 90
+    name: admin-port
+    protocol: HTTP
+  location: MESH_INTERNAL
+  resolution: STATIC
+  endpoints:
+  - address: {{ $.Values.eastwestGatewayIP }}
+    ports:
+      http-port: 15443
+      admin-port: 15443
+    network: west-network
+    locality: west
+    labels:
+      security.istio.io/tlsMode: istio
+  location: MESH_INTERNAL
+  resolution: STATIC
