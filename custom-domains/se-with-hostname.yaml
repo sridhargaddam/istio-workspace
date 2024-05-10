@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: se-with-workload-selector
+  namespace: istio-system
+spec:
+  hosts:
+  - httpbin.global.mesh
+  ports:
+  - name: http
+    number: 8000
+    protocol: HTTP
+  endpoints:
+  - address: httpbin.httpbin.svc.cluster.local
+    labels:
+      security.istio.io/tlsMode: istio
+  location: MESH_INTERNAL
+  resolution: DNS

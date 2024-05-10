@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: custom-service-entry-for-local-httpbin
+spec:
+  hosts:
+  - httpbin.global.mesh
+  ports:
+  - name: http
+    number: 8000
+    protocol: HTTP
+  endpoints:
+  - address: {{ $.Values.httpbinSvcIP }}   # This points to the httpbin serviceIP
+    ports:
+      http: 8000
+    labels:
+      app: httpbin
+      security.istio.io/tlsMode: istio
+  location: MESH_INTERNAL
+  resolution: STATIC

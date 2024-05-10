@@ -107,4 +107,5 @@ helm template -s templates/istio.yaml . \
 
 1. [Locality based load-balancing](./locality-load-balancing/README.md)
 2. [Importing a Service with multiple ports](./multi-port-service/README.md)
+3. [Using custom domains as part of service discovery](./custom-domains/README.md)
 
