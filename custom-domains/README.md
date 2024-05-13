@@ -21,12 +21,14 @@ kwest create namespace httpbin
 kwest label namespace httpbin istio-injection=enabled
 kwest apply -f https://raw.githubusercontent.com/istio/istio/release-1.20/samples/httpbin/httpbin.yaml -n httpbin
 ```
+#### Without egress gateway
 
-3. Import httpbin from west cluster to east cluster:
+1. Import httpbin from west cluster to east cluster:
 ```shell
 REMOTE_INGRESS_IP=$(kwest get svc -l istio=eastwestgateway -n istio-system -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
 helm template -s templates/custom-domain/import-remote-svc.yaml . \
   --set eastwestGatewayIP=$REMOTE_INGRESS_IP \
+  --set eastwestEgressEnabled=false \
   | keast apply -f -
 ```
 
@@ -35,16 +37,43 @@ Check endpoints in sleep's istio-proxy:
 istioctl --kubeconfig=east.kubeconfig pc endpoints deploy/sleep -n sleep | grep httpbin
 ```
 
-4. Make a request from sleep to httpbin and this would fail as the remote eastwest gateway does not have information on where to route the request for custom domain:
+#### With egress gateway
+
+1. Update Istio installation with egress gateway:
+```shell
+helm template -s templates/istio.yaml . \
+  --set localCluster=east \
+  --set remoteCluster=west \
+  --set eastwestEgressEnabled=true \
+  | istioctl --kubeconfig=east.kubeconfig install -y -f -
+```
+
+2. Import httpbin from west cluster to east cluster:
+```shell
+REMOTE_INGRESS_IP=$(kwest get svc -l istio=eastwestgateway -n istio-system -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
+LOCAL_EGRESS_IP=$(keast get svc -l istio=eastwestgateway-egress -n istio-system -o jsonpath='{.items[0].spec.clusterIP}')
+helm template -s templates/custom-domain/import-remote-svc.yaml . \
+  --set eastwestGatewayIP=$REMOTE_INGRESS_IP \
+  --set egressGatewayIP=$LOCAL_EGRESS_IP \
+  --set eastwestEgressEnabled=true \
+  | keast apply -f -
+```
+
+Check endpoints in eastwest gateway istio-proxy:
+```shell
+istioctl --kubeconfig=east.kubeconfig pc endpoints deploy/istio-eastwestgateway-egress -n istio-system | grep global
+```
+
+#### Using ServiceEntry with explicit address
+
+1. Make a request from sleep to httpbin and this would fail as the remote eastwest gateway does not have information on where to route the request for custom domain:
 
 ```shell
 SLEEP_POD_NAME=$(keast get pods -l app=sleep -n sleep -o jsonpath='{.items[0].metadata.name}')
 keast exec $SLEEP_POD_NAME -n sleep -c sleep -- curl -v httpbin.global.mesh:8000/headers
 ```
 
-#### Using ServiceEntry with explicit address
-
-5. Now lets create a ServiceEntry in the west cluster that points to the httpbin service IP.
+2. Now lets create a ServiceEntry in the west cluster that points to the httpbin service IP.
 ```shell
 HTTPBIN_SVC_IP=$(kwest get svc -l app=httpbin -n httpbin -o jsonpath='{.items[0].spec.clusterIP}')
 helm template -s templates/custom-domain/custom-service-entry.yaml . \
@@ -54,18 +83,10 @@ helm template -s templates/custom-domain/custom-service-entry.yaml . \
 
 **Note:** The serviceEntry in the west cluster can be created even with PodIP as well.
 
-6. Now, make a request from sleep to httpbin and this should work.
+3. Now, make a request from sleep to httpbin and this should work.
 ```shell
 SLEEP_POD_NAME=$(keast get pods -l app=sleep -n sleep -o jsonpath='{.items[0].metadata.name}')
 keast exec $SLEEP_POD_NAME -n sleep -c sleep -- curl -v httpbin.global.mesh:8000/headers
-```
-
-7. Lets delete the serviceEntry created above.
-```shell
-HTTPBIN_SVC_IP=$(kwest get svc -l app=httpbin -n httpbin -o jsonpath='{.items[0].spec.clusterIP}')
-helm template -s templates/custom-domain/custom-service-entry.yaml . \
-  --set httpbinSvcIP=$HTTPBIN_SVC_IP \
-  | kwest delete -f -
 ```
 
 #### Using ServiceEntry with service name
@@ -73,6 +94,10 @@ helm template -s templates/custom-domain/custom-service-entry.yaml . \
 Instead of using serviceIP in the serviceEntry, we can simply use the serviceName itself in the ServiceEntry and the use-case would work.
 
 ```shell
+HTTPBIN_SVC_IP=$(kwest get svc -l app=httpbin -n httpbin -o jsonpath='{.items[0].spec.clusterIP}')
+helm template -s templates/custom-domain/custom-service-entry.yaml . \
+  --set httpbinSvcIP=$HTTPBIN_SVC_IP \
+  | kwest delete -f -
 kwest apply -f custom-domains/se-with-hostname.yaml
 ```
 Sample output:
