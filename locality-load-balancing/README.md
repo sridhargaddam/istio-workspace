@@ -6,8 +6,8 @@
 
 1. Configure east-west gateway and enable mtls:
 ```shell
-keast apply -f locality-load-balancing/auto-passthrough-gateway.yaml -n istio-system
-kwest apply -f locality-load-balancing/auto-passthrough-gateway.yaml -n istio-system
+keast apply -f auto-passthrough-gateway.yaml -n istio-system
+kwest apply -f auto-passthrough-gateway.yaml -n istio-system
 keast apply -f mtls.yaml -n istio-system
 kwest apply -f mtls.yaml -n istio-system
 ```
@@ -45,7 +45,7 @@ kwest apply -f helloworld-zone3.yaml -n sample
 1. Import helloworld from west cluster to east cluster:
 ```shell
 EAST_WEST_GW_IP=$(kwest get svc -l istio=eastwestgateway -n istio-system -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
-helm template -s templates/helloworld-workload.yaml . \
+helm template -s templates/locality-load-balancing/helloworld-workload.yaml . \
   --set eastwestGatewayIP=$EAST_WEST_GW_IP --set localityInfo="us/west/zone3" | keast apply -n sample -f -
 ```
 

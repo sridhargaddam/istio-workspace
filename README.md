@@ -104,7 +104,8 @@ helm template -s templates/istio.yaml . \
 
 #### Try out
 
-1. [Locality based load-balancing](./locality-load-balancing/README.md)
-2. [Importing a Service with multiple ports](./multi-port-service/README.md)
-3. [Using custom domains as part of service discovery](./custom-domains/README.md)
+1. [Load-balancing in Mesh Federation](./load-balancing/README.md)
+2. [Locality based load-balancing](./locality-load-balancing/README.md)
+3. [Importing a Service with multiple ports](./multi-port-service/README.md)
+4. [Using custom domains as part of service discovery](./custom-domains/README.md)
 
