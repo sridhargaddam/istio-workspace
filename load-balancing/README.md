@@ -45,7 +45,7 @@ helm template -s templates/load-balancing/import-as-local.yaml . \
   | keast apply -f -
 ```
 
-3. Check endpoints for httpbin in fortio's istio-proxy and you should see two endpoints.
+2. Check endpoints for httpbin in fortio's istio-proxy and you should see two endpoints.
 ```shell
 istioctl --kubeconfig=east.kubeconfig pc endpoints deploy/fortio-deploy -n fortio | grep httpbin
 ```
