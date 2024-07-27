@@ -1,9 +1,13 @@
-# istio-workspace
+# Sample validation commands
 
 ```shell
 kind create cluster --config=../east-cluster.yaml
 kind get kubeconfig --name east > east.kubeconfig
 alias k="KUBECONFIG=$(pwd)/east.kubeconfig kubectl"
+```
+
+```shell
+istioctl install -y --set profile=demo
 ```
 
 ```shell
