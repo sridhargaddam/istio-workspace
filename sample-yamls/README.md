@@ -20,6 +20,7 @@ k apply -f https://raw.githubusercontent.com/istio/istio/release-1.20/samples/sl
 k create namespace httpbin
 k label namespace httpbin istio-injection=enabled
 k apply -f https://raw.githubusercontent.com/istio/istio/release-1.20/samples/httpbin/httpbin.yaml -n httpbin
+# On OpenShift, we can use the following yaml - https://raw.githubusercontent.com/maistra/istio/refs/heads/maistra-2.6/samples/httpbin/httpbin.yaml
 # To verify access to httpbin svc
 k exec -it -n sleep deploy/sleep -- curl -s httpbin.httpbin.svc.cluster.local:8000/get
 ```
