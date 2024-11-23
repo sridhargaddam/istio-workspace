@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example
+spec:
+  containers:
+  - name: hello
+    image: quay.io/sridhargaddam/alpine:latest
+    command:
+     - sleep
+     - infinity
+  - name: istio-proxy
+    image: auto
+    resources:
+      requests:
+        cpu: "100m"
