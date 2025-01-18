@@ -2,8 +2,6 @@
 
 ```shell
 kind create cluster
-kind get kubeconfig --name east > east.kubeconfig
-alias k="KUBECONFIG=$(pwd)/east.kubeconfig kubectl"
 ```
 
 Build a docker image of the Sail Operator.
@@ -30,21 +28,21 @@ kubectl apply -f chart/samples/ambient/istioztunnel-sample.yaml
 
 Create a sample `curl` pod in the sleep namespace.
 ```shell
-k create namespace sleep || true
-k label namespace sleep istio.io/dataplane-mode=ambient --overwrite
-k apply -f https://raw.githubusercontent.com/sridhargaddam/istio-workspace/refs/heads/main/sample-yamls-ambient/sleep.yaml -n sleep
+kubectl create namespace sleep || true
+kubectl label namespace sleep istio.io/dataplane-mode=ambient --overwrite
+kubectl apply -f https://raw.githubusercontent.com/sridhargaddam/istio-workspace/refs/heads/main/sample-yamls-ambient/sleep.yaml -n sleep
 ```
 
 Create an `httpbin` pod in the httpbin namespace.
 ```shell
-k create namespace httpbin || true
-k label namespace httpbin istio.io/dataplane-mode=ambient --overwrite
-k apply -f https://raw.githubusercontent.com/sridhargaddam/istio-workspace/refs/heads/main/sample-yamls-ambient/httpbin.yaml -n httpbin
+kubectl create namespace httpbin || true
+kubectl label namespace httpbin istio.io/dataplane-mode=ambient --overwrite
+kubectl apply -f https://raw.githubusercontent.com/sridhargaddam/istio-workspace/refs/heads/main/sample-yamls-ambient/httpbin.yaml -n httpbin
 ```
 
 Verify that we are able to access the httpbin service from the sleep pod.
 ```shell
-k exec -it -n sleep deploy/sleep -- curl -s httpbin.httpbin.svc.cluster.local:8000/get
+kubectl exec -it -n sleep deploy/sleep -- curl -s httpbin.httpbin.svc.cluster.local:8000/get
 ```
 
 To confirm that `ztunnel` successfully opened listening sockets inside the pod network ns, use the following command.
