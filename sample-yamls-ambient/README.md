@@ -24,6 +24,7 @@ kubectl create ns ztunnel || true
 kubectl apply -f chart/samples/ambient/istio-sample.yaml
 kubectl apply -f chart/samples/ambient/istiocni-sample.yaml
 kubectl apply -f chart/samples/ambient/istioztunnel-sample.yaml
+# Alternately, you can simply run "make deploy-istio-with-ambient"
 ```
 
 Create a sample `curl` pod in the sleep namespace.
