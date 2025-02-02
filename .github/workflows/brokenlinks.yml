@@ -1,5 +1,5 @@
 ---
-name: Check .md links
+name: Check broken links
 
 on:
   push:

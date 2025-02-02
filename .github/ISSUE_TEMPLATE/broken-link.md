@@ -1,1 +1,1 @@
-Broken link detected. Please see the Check .md links job for details.
+Broken link detected. Please see the [job results](https://github.com/sridhargaddam/istio-workspace/actions/workflows/brokenlinks.yml) for details.
