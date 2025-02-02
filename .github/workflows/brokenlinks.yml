@@ -2,7 +2,9 @@
 name: Check .md links
 
 on:
-  push: [master]
+  push:
+    branches:
+      - main
 
 permissions: {}
 
