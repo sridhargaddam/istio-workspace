@@ -31,14 +31,14 @@ Create a sample `curl` pod in the sleep namespace.
 ```shell
 kubectl create namespace sleep || true
 kubectl label namespace sleep istio.io/dataplane-mode=ambient --overwrite
-kubectl apply -f https://raw.githubusercontent.com/sridhargaddam/istio-workspace/refs/heads/main/sample-yamls-ambient/sleep.yaml -n sleep
+kubectl apply -n sleep -f https://raw.githubusercontent.com/sridhargaddam/istio-workspace/refs/heads/main/sample-yamls-ambient/sleep.yaml
 ```
 
 Create an `httpbin` pod in the httpbin namespace.
 ```shell
 kubectl create namespace httpbin || true
 kubectl label namespace httpbin istio.io/dataplane-mode=ambient --overwrite
-kubectl apply -f https://raw.githubusercontent.com/sridhargaddam/istio-workspace/refs/heads/main/sample-yamls-ambient/httpbin.yaml -n httpbin
+kubectl apply -n httpbin -f https://raw.githubusercontent.com/sridhargaddam/istio-workspace/refs/heads/main/sample-yamls-ambient/httpbin.yaml
 ```
 
 Verify that we are able to access the httpbin service from the sleep pod.
