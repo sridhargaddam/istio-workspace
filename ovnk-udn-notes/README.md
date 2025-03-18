@@ -84,7 +84,7 @@ oc apply -n sleep -f https://raw.githubusercontent.com/istio/istio/release-1.20/
 oc apply -n httpbin -f https://raw.githubusercontent.com/sridhargaddam/istio-workspace/refs/heads/main/sample-yamls-ambient/httpbin.yaml
 ```
 
-7. You'll notice that both `sleep` and `httpbin` pods fail to come up as the webhook cannot reach the istiod service.
+7. You'll notice that both `sleep` and `httpbin` pods fail to come up as the K8s API server is unable to communicate with the istio sidecar injector webhook.
 
 ```shell
 oc get deployment httpbin -n httpbin -oyaml
