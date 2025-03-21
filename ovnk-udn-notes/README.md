@@ -1,7 +1,7 @@
 # POC: Deploying Sail Operator on a UDN Network in an OCP 4.18 Cluster
 
 ### Prerequisites:
-* Access to an OCP 4.18 cluster that includes OVN-K User Defined Networks(UDN) Support.
+* Access to an OCP 4.18 cluster that includes OVN-K User Defined Network (UDN) Support.
 
 ### Steps:
 
@@ -44,7 +44,7 @@ EOF
 done
 ```
 
-3. Create a Primary `ClusterUserDefinedNetwork` CR named `istio-cudn`
+3. Create a Primary `ClusterUserDefinedNetwork` CR named `ossm-cudn`
 
 ```shell
 cat <<EOF | oc apply -f -
@@ -109,7 +109,7 @@ spec:
       imagePullPolicy: "Always"
 EOF
 ```
-Note: Please note that we are using a custom pilot image in the `Istio` CR that includes a UDN workaround.
+Note: Please note that we are using a custom pilot image in the above `Istio` CR that includes a UDN workaround.
 
 6. Once `istiod` pod comes up in the `istio-system` namespace, manually add the following annotation to the pod yaml.
 
