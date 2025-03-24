@@ -109,7 +109,7 @@ spec:
       imagePullPolicy: "Always"
 EOF
 ```
-Note: Please note that we are using a custom pilot image in the above `Istio` CR that includes a UDN workaround.
+Note: Please note that the above `Istio` CR uses a custom pilot image, where the Istio EndpointSlice controller builds its endpoints using the UDN network in sidecar mode.
 
 6. Once `istiod` pod comes up in the `istio-system` namespace, manually add the following annotation to the pod yaml.
 
