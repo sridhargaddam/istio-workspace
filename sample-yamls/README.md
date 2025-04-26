@@ -19,8 +19,8 @@ k apply -n sleep -f https://raw.githubusercontent.com/istio/istio/release-1.20/s
 ```shell
 k create namespace httpbin
 k label namespace httpbin istio-injection=enabled
-# For ambient, use k label namespace httpbin istio.io/dataplane-mode=ambient
 k apply -n httpbin -f https://raw.githubusercontent.com/sridhargaddam/istio-workspace/refs/heads/main/sample-yamls-ambient/httpbin.yaml
+
 # To verify access to httpbin svc
 k exec -it -n sleep deploy/sleep -- curl -s httpbin.httpbin.svc.cluster.local:8000/get
 ```
