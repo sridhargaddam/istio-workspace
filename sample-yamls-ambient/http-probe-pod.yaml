@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: http-probe-pod
+  labels:
+    app: my-app
+spec:
+  containers:
+  - name: http-container
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+    readinessProbe:
+      httpGet:
+        path: /index.html
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 2
+      failureThreshold: 300 
