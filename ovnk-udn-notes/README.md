@@ -109,7 +109,9 @@ spec:
       imagePullPolicy: "Always"
 EOF
 ```
-Note: Please note that the above `Istio` CR uses a custom pilot image, where the Istio EndpointSlice controller builds its endpoints using the UDN network in sidecar mode.
+Note: Please note that the above Istio CR uses a custom pilot image, where the Istio EndpointSlice controller builds its endpoints using the UDN
+network in sidecar mode. The pilot image is built by updating the Istio EndpointSlice controller to use "k8s.ovn.org/service-name" as the LabelServiceName
+instead of the default value defined [here](https://github.com/kubernetes/api/blob/71f613bc35100524b91fba5c07de2fbc8722b1c5/discovery/v1/well_known_labels.go#L21).
 
 6. Once `istiod` pod comes up in the `istio-system` namespace, manually add the following annotation to the pod yaml.
 
