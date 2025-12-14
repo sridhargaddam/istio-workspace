@@ -126,7 +126,7 @@ metadata:
       - protocol: tcp
         port: 15012
       - protocol: tcp
-        port: 8080
+        port: 443
       - protocol: tcp
         port: 15010
       - protocol: tcp
@@ -144,7 +144,7 @@ oc apply -n httpbin -f https://raw.githubusercontent.com/sridhargaddam/istio-wor
 8. If you query the Istio endpoints using the `istioctl proxy-config` command, you'll notice that the endpoint IP associated with `httpbin` points to IP on UDN network and not the default network.
 
 ```shell
-$: istioctl proxy-config endpoints -n sleep sleep-5fcd8fd6c8-gtj6d | grep httpbin
+$: istioctl proxy-config endpoints -n sleep deploy/sleep | grep httpbin
 22.222.0.26:8000  HEALTHY   OK    outbound|8000||httpbin.httpbin.svc.cluster.local
 ```
 
@@ -206,7 +206,7 @@ You should also be able to access http://${GATEWAY_URL}/productpage from a web b
 12. If you check the Istio endpoints, you'll see that the endpoint IPs point to the UDN IPs of the Bookinfo pods.
 
 ```shell
-$: istioctl proxy-config endpoints -n bookinfo productpage-v1-dffc47f64-zs276 | grep reviews
+$: istioctl proxy-config endpoints -n bookinfo deploy/productpage-v1 | grep reviews
 22.222.0.44:9080          HEALTHY     OK                outbound|9080||reviews-v3.bookinfo.svc.cluster.local
 22.222.0.44:9080          HEALTHY     OK                outbound|9080||reviews.bookinfo.svc.cluster.local
 22.222.4.48:9080          HEALTHY     OK                outbound|9080||reviews-v1.bookinfo.svc.cluster.local
