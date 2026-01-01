@@ -18,7 +18,7 @@
       labels:
         k8s.ovn.org/primary-user-defined-network: ""
     EOF
-    done   
+    done
     ```
 
 1. Create the `sample` and `httpbin` namespaces with the required labels.
@@ -58,7 +58,7 @@
           role: Primary
           subnets:
             - 2.2.0.0/16
-    EOF          
+    EOF
     ```
 
 1. Clone the Sail Operator repo and install the operator.

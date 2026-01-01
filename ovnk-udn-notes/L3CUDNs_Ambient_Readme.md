@@ -18,7 +18,7 @@
       labels:
         k8s.ovn.org/primary-user-defined-network: ""
     EOF
-    done   
+    done
     ```
 
 1. Create the `sample` and `httpbin` namespaces with the required labels.
@@ -117,8 +117,8 @@
         global:
           imagePullPolicy: "Always"
     EOF
-
     ```
+
     Note: Please note that the Istio CR above uses a custom pilot image. In this setup, the Istio EndpointSlice controller builds
     endpoints using the UDN network, and the ambient workload builder uses mirrored EndpointSlices for pod IPs instead of the IPs
     from the pod spec.
