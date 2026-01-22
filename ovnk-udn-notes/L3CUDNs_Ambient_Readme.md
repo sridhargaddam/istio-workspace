@@ -17,6 +17,7 @@
       name: $ns
       labels:
         k8s.ovn.org/primary-user-defined-network: ""
+        cudn-network: "true"
     EOF
     done
     ```
@@ -34,6 +35,7 @@
       labels:
         k8s.ovn.org/primary-user-defined-network: ""
         istio.io/dataplane-mode: ambient
+        cudn-network: "true"
     EOF
     done
     ```
@@ -48,10 +50,8 @@
       name: ossm-l3-cudn
     spec:
       namespaceSelector:
-        matchExpressions:
-        - key: kubernetes.io/metadata.name
-          operator: In
-          values: ["sleep", "httpbin", "bookinfo", "istio-system", "istio-cni", "sail-operator", "ztunnel"]
+        matchLabels:
+          cudn-network: "true"
       network:
         topology: Layer3
         layer3:
