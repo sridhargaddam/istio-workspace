@@ -141,7 +141,7 @@
     oc apply -n sleep -f https://raw.githubusercontent.com/istio/istio/release-1.20/samples/sleep/sleep.yaml
     oc apply -n httpbin -f https://raw.githubusercontent.com/sridhargaddam/istio-workspace/refs/heads/main/sample-yamls-ambient/httpbin.yaml
     ```
-
+   
 1. Verify that the mirrored endpointslices are created by OVNK. 
 
     ```shell
@@ -230,3 +230,10 @@
    httpbin      httpbin-7bfcbb4dbd-vvrxq         3.3.1.11      user-rhos-01-06-9pzb8-worker-0-clflq None     HBONE
    sleep        sleep-868c754c4b-spq8x           3.3.1.9       user-rhos-01-06-9pzb8-worker-0-clflq None     HBONE
    ```
+
+### Open Issues:
+1. OVN-K is using a combination of host-level nftables rules and OVN ACLs to support kubelet health checks on the default network.
+   The OVN ACLs allow traffic only from the ovn-k8s-mp0 management iface and reject all other traffic. In Istio ambient mode, kubelet
+   health check traffic on the host network is SNATed to 169.254.7.127. As a result, when this traffic enters the OVN-K pipeline, it is
+   silently dropped by the OVN ACLs because the source IP no longer matches the address of the ovn-k8s-mp0 interface. Until this is fixed,
+   ensure that your appliation workloads do not have any readiness probes configured.
