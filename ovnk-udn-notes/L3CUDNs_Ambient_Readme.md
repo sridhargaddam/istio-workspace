@@ -83,6 +83,12 @@
       profile: ambient
       version: v1.28.1
       namespace: istio-cni
+      values:
+        cni:
+          forceIptablesBinary: nft
+          image: quay.io/sridhargaddam/install-cni:ovnk-udn-1.28-ambient
+          ambient:
+            reconcileIptablesOnStartup: true
     EOF
     ```
 
