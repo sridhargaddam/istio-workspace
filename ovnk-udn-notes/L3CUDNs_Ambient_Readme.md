@@ -144,7 +144,7 @@
 1. Deploy `sleep` and `httpbin` pods in their respective namespaces.
 
     ```shell
-    oc apply -n sleep -f https://raw.githubusercontent.com/istio/istio/release-1.20/samples/sleep/sleep.yaml
+    oc apply -n sleep -f https://raw.githubusercontent.com/istio/istio/release-1.28/samples/sleep/sleep.yaml
     oc apply -n httpbin -f https://raw.githubusercontent.com/sridhargaddam/istio-workspace/refs/heads/main/sample-yamls-ambient/httpbin.yaml
     ```
    
