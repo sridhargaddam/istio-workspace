@@ -1,14 +1,14 @@
 # POC: Layer 3 ClusterUserDefinedNetwork with Sail Operator on an OCP 4.18+ Cluster
 
 ### Prerequisites:
-* Access to an OCP 4.18 cluster that includes OVN-K User Defined Network (UDN) Support.
+* Access to an OCP 4.18+ cluster that includes OVN-K User Defined Network (UDN) Support.
 
 ### Steps:
 
 1. Let's create the necessary namespaces for Sail Operator and Istio components.
 
     ```shell
-    namespaces_without_injection=("istio-system" "istio-cni" "sail-operator" "ztunnel")
+    namespaces_without_injection=("istio-system" "istio-cni" "sail-operator")
 
     for ns in "${namespaces_without_injection[@]}"; do
       cat <<EOF | oc apply -f -
@@ -18,6 +18,7 @@
       name: $ns
       labels:
         k8s.ovn.org/primary-user-defined-network: ""
+        cudn-network: "true"
     EOF
     done
     ```
@@ -36,11 +37,12 @@
       labels:
         k8s.ovn.org/primary-user-defined-network: ""
         istio-injection: "enabled"
+        cudn-network: "true"
     EOF
     done
     ```
 
-1. Create a Primary `ClusterUserDefinedNetwork` CR named `ossm-cudn`
+1. Create a L3 Primary `ClusterUserDefinedNetwork` CR named `ossm-cudn`
 
     ```shell
     cat <<EOF | oc apply -f -
@@ -50,10 +52,8 @@
       name: ossm-cudn
     spec:
       namespaceSelector:
-        matchExpressions:
-        - key: kubernetes.io/metadata.name
-          operator: In
-          values: ["sleep", "httpbin", "bookinfo", "istio-system", "istio-cni", "ztunnel", "sail-operator"]
+        matchLabels:
+          cudn-network: "true"
       network:
         topology: Layer3
         layer3:
@@ -69,6 +69,7 @@
     ```shell
     git clone https://github.com/istio-ecosystem/sail-operator.git
     cd sail-operator
+    git checkout release-1.28
     make deploy
     ```
 
@@ -81,7 +82,7 @@
     metadata:
       name: default
     spec:
-      version: v1.24.3
+      version: v1.28.1
       namespace: istio-cni
     EOF
     ```
@@ -93,14 +94,14 @@
     metadata:
       name: default
     spec:
-      version: v1.24.3
+      version: v1.28.1
       namespace: istio-system
       updateStrategy:
         type: InPlace
         inactiveRevisionDeletionGracePeriodSeconds: 30
       values:
         pilot:
-          image: quay.io/sridhargaddam/pilot:udn-fix
+          image: quay.io/sridhargaddam/pilot:ovnk-udn-1.28
           podAnnotations:
             k8s.ovn.org/open-default-ports: |
               - protocol: tcp
