@@ -84,7 +84,7 @@ kwest create secret generic cacerts -n istio-system \
   --from-file=cert-chain.pem=west/cert-chain.pem
 ```
 
-### Install Istio
+### Install Istio:
 
 ```shell
 helm template -s templates/istio.yaml . \
