@@ -39,7 +39,7 @@ sed "s/{{.cidr}}/$EAST_CLUSTER_CIDR/g" ip-address-pool.tmpl.yaml | keast apply -
 sed "s/{{.cidr}}/$WEST_CLUSTER_CIDR/g" ip-address-pool.tmpl.yaml | kwest apply -n metallb-system -f -
 ```
 
-### Trust model
+### Trust model:
 
 1. Download tools for certificate generation:
 ```shell
