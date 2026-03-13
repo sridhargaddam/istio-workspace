@@ -1,7 +1,5 @@
 # istio-workspace
 
-> 📝 This is a continuation of the [work from Jacek Ewertowski](https://github.com/jewertow/istio-playground/blob/master/mesh-federation/README.md) and includes steps to verify the [following use-cases](https://github.com/sridhargaddam/istio-workspace/tree/main#try-out) in a multi-mesh deployment.
-
 ### Setup KIND clusters with locality info configured on the nodes.
 
 1. Create the first cluster with region set to `east` and two nodes in different zones.
