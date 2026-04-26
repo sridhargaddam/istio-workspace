@@ -1,7 +1,5 @@
 # istio-workspace
 
-> 📝 This is a continuation of the [work from Jacek Ewertowski](https://github.com/jewertow/istio-playground/blob/master/mesh-federation/README.md) and includes steps to verify the [following use-cases](https://github.com/sridhargaddam/istio-workspace/tree/main#try-out) in a multi-mesh deployment.
-
 ### Setup KIND clusters with locality info configured on the nodes.
 
 1. Create the first cluster with region set to `east` and two nodes in different zones.
@@ -41,7 +39,7 @@ sed "s/{{.cidr}}/$EAST_CLUSTER_CIDR/g" ip-address-pool.tmpl.yaml | keast apply -
 sed "s/{{.cidr}}/$WEST_CLUSTER_CIDR/g" ip-address-pool.tmpl.yaml | kwest apply -n metallb-system -f -
 ```
 
-### Trust model
+### Trust model:
 
 1. Download tools for certificate generation:
 ```shell
@@ -86,7 +84,7 @@ kwest create secret generic cacerts -n istio-system \
   --from-file=cert-chain.pem=west/cert-chain.pem
 ```
 
-### Install Istio
+### Install Istio:
 
 ```shell
 helm template -s templates/istio.yaml . \
