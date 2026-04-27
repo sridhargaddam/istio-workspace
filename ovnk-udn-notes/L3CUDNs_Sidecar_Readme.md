@@ -101,6 +101,8 @@
         inactiveRevisionDeletionGracePeriodSeconds: 30
       values:
         pilot:
+          env:
+            PILOT_ENABLE_OVNK_UDN: "true"
           image: quay.io/sridhargaddam/pilot:ovnk-udn-1.28
           podAnnotations:
             k8s.ovn.org/open-default-ports: |

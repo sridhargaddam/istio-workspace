@@ -106,6 +106,8 @@
         type: InPlace
       values:
         pilot:
+          env:
+            PILOT_ENABLE_OVNK_UDN: "true"
           trustedZtunnelNamespace: "ztunnel"
           image: quay.io/sridhargaddam/pilot:ovnk-udn-1.28-ambient
           podAnnotations:
